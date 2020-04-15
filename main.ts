@@ -5,10 +5,6 @@
 //% color=190 weight=100 icon="\uf11b" block="Game64Tools"
 namespace Game64Tools {
 
-    function hslToRgb(h : number, s : number, l : number) : Array<number> {
-        
-    }
-
     /**
      * A function that returns a non-void argument generates a reporter block (oval shape).
      */
