@@ -1,35 +1,59 @@
 
+
+enum Saturation {
+    //%block="A deeply"
+    SuperIntense=255,
+    //%block="A "
+    Intense=200,
+    //%block="A quite"
+    Normal=150,
+    //%block="A faded"
+    Faded=100,
+    //%block="A pale"
+    Pale=50
+}
+
 enum Hue {
+    //%block="red"
     Red=0,
+    //%block="orange"
     Orange=28,
+    //%block="yellow"
     Yellow=56,
+    //%block="green"
     Green=84,
+    //%block="turquoise"
     Turquoise=112,
+    //%block="blue"
     Blue=140,
+    //%block="violet"
     Violet=168,
+    //%block="purple"
     Purple=196,
+    //%block="pink"
     Pink=224
 }
 
-enum Saturation {
-    Strong=255,
-    Normal=200,
-    Faded=150,
-    Pale=100,
-    Paler=50,
-    Colorless=0
+enum Brightness {
+    //%block="pastell"
+    Pastell=200,
+    //%block="light"
+    VeryLight=150,
+    //%block="bright"
+    Bright=127,
+    //%block="dark"
+    Dark=100,
+    //%block="very dark"
+    VeryDark=20,
+    //%block="almost black"
+    VeryVeryDark=5,
 }
 
-enum Brightness {
-    White=255,
-    Pastell=200,
-    Light=150,
-    Intense=127,
-    SlightlyDarker=100,
-    Draker=50,
-    Dark=25,
-    Black
-}
+    enum GameState {
+        Intro,
+        InGame,
+        GameOver
+    }
 
 /**
  * Provides access to basic micro:bit functionality.
@@ -41,26 +65,53 @@ namespace Game64Tools {
     class GameContext {
         
         display: any;
-        renderGameFrame: ()=>void;
+        state: GameState;
+        currentMask: Array<number>;
+        onIntro: () => void;
+        bgColor: any;
 
         constructor() {
             this.display = GAME_ZIP64.createZIP64Display();
-            this.renderGameFrame = () => {};
-        }                                           
-        renderFrame() {
-            if ( this.renderGameFrame !== undefined ) {
-                this.display.clear()
-                this.renderGameFrame();
-                this.display.show();
+            this.state = GameState.Intro;
+            this.currentMask = [];
+            this.onIntro = () => {};
+            this.bgColor = null;
+        }
+
+        renderBg() {
+            if ( this.bgColor ) {
+                for (let y = 0 ; y < 8 ; ++y ) {
+                    for (let x = 0 ; x < 8 ; ++x ) {
+                        this.display.setMatrixColor(x, y, this.bgColor);
+                    }    
+                }
             }
         }
+
+        renderFrame() {
+            this.display.clear();
+            this.renderBg();
+            this.display.show();
+    }
+
     };
     let _gameContex = new GameContext();
 
+    //% block="on intro"
+    export function gameIntro(handler : () => void)  {
+        _gameContex.onIntro = handler;
+        handler();
+        _gameContex.renderFrame();
+    }
+
+    //% block="set color $color| as background"
+    export function setBackgroundColor(color : any)  {
+        _gameContex.onIntro = color;
+    }
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
-    //% block="get color with hue $hue| saturation $sat| and lightness $lum"
+    //% block="color with hue $hue| saturation $sat| and brightness $lum"
     export function hslToRgb(hue : number = 0, sat : number = 255, lum : number = 128)  {
         hue %= 256;
         let v : number;
@@ -99,7 +150,7 @@ namespace Game64Tools {
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
-    //% block="Color"
+    //% block="$sat| $hue| color that is $lum"
     export function color(hue: Hue, sat: Saturation, lum: Brightness)  {
         return hslToRgb(hue, sat, lum);
     }
