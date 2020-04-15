@@ -1,4 +1,36 @@
 
+enum Hue {
+    Red=0,
+    Orange=28,
+    Yellow=56,
+    Green=84,
+    Turquoise=112,
+    Blue=140,
+    Violet=168,
+    Purple=196,
+    Pink=224
+}
+
+enum Saturation {
+    Strong=255,
+    Normal=200,
+    Faded=150,
+    Pale=100,
+    Paler=50,
+    Colorless=0
+}
+
+enum Brightness {
+    White=255,
+    Pastell=200,
+    Light=150,
+    Intense=127,
+    SlightlyDarker=100,
+    Draker=50,
+    Dark=25,
+    Black
+}
+
 /**
  * Provides access to basic micro:bit functionality.
  */
@@ -62,42 +94,12 @@ namespace Game64Tools {
         return GAME_ZIP64.rgb(r,g,b);
     }
 
-    enum Hue {
-        Red=0,
-        Orange=28,
-        Yellow=56,
-        Green=84,
-        Turquoise=112,
-        Blue=140,
-        Violet=168,
-        Purple=196,
-        Pink=224
-    }
 
-    enum Saturation {
-        Strong=255,
-        Normal=200,
-        Faded=150,
-        Pale=100,
-        Paler=50,
-        Colorless=0
-    }
-
-    enum Brightness {
-        White=255,
-        Pastell=200,
-        Light=150,
-        Intense=127,
-        SlightlyDarker=100,
-        Draker=50,
-        Dark=25,
-        Black
-    }
 
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
-    //% block
+    //% block="Color"
     export function color(hue: Hue, sat: Saturation, lum: Brightness)  {
         return hslToRgb(hue, sat, lum);
     }
