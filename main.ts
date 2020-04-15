@@ -3,14 +3,14 @@
  * Provides access to basic micro:bit functionality.
  */
 //% color=190 weight=100 icon="\uf11b" block="Game64Tools"
-namespace Game64Tools {
+namespace MPGame64Tools {
 
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
     //% block
-    export function hueSatLightToColor(hue : number, sat : number, lum : number): number {
-
+    export function hueSatLightToColor(hue : number = 0, sat : number = 0, lum : number = 0)  {
+        hue %= 256;
         let v : number;
         let r,g,b : number;
 
