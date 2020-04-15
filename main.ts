@@ -49,11 +49,50 @@ enum Brightness {
     VeryVeryDark=5,
 }
 
-    enum GameState {
-        Intro,
-        InGame,
-        GameOver
+enum GameState {
+    Intro,
+    InGame,
+    GameOver
+}
+
+//% fixedInstances
+//% blockNamespace=Game64Tools
+class GameContext {
+    display: any;
+    state: GameState;
+    currentMask: Array<number>;
+    onIntro: () => void;
+    bgColor: number;
+
+    constructor() {
+        this.display = GAME_ZIP64.createZIP64Display();
+        this.state = GameState.Intro;
+        this.currentMask = [];
+        this.onIntro = () => {};
+        this.bgColor = -1;
     }
+
+    renderBg() {
+        if ( this.bgColor > 0 ) {
+            for (let y = 0 ; y < 8 ; ++y ) {
+                for (let x = 0 ; x < 8 ; ++x ) {
+                    this.display.setMatrixColor(x, y, this.bgColor);
+                }    
+            }
+        }
+    }
+
+    renderFrame() {
+        this.display.clear();
+        this.renderBg();
+        this.display.show();
+    }
+
+
+
+
+}
+
 
 /**
  * Provides access to basic micro:bit functionality.
@@ -61,53 +100,22 @@ enum Brightness {
 //% color=190 weight=100 icon="\uf11b" block="Mathea & Pappa"
 namespace Game64Tools {
 
+    //% fixedInstance
+    export const GlobalGame = new GameContext();
 
-    class GameContext {
-        
-        display: any;
-        state: GameState;
-        currentMask: Array<number>;
-        onIntro: () => void;
-        bgColor: any;
-
-        constructor() {
-            this.display = GAME_ZIP64.createZIP64Display();
-            this.state = GameState.Intro;
-            this.currentMask = [];
-            this.onIntro = () => {};
-            this.bgColor = null;
-        }
-
-        renderBg() {
-            if ( this.bgColor ) {
-                for (let y = 0 ; y < 8 ; ++y ) {
-                    for (let x = 0 ; x < 8 ; ++x ) {
-                        this.display.setMatrixColor(x, y, this.bgColor);
-                    }    
-                }
-            }
-        }
-
-        renderFrame() {
-            this.display.clear();
-            this.renderBg();
-            this.display.show();
-    }
-
-    };
-    let _gameContex = new GameContext();
-
-    //% block="on intro"
-    export function gameIntro(handler : () => void)  {
-        _gameContex.onIntro = handler;
+    //%  block="on intro "
+    export function gameIntro(handler : () => void) {
         handler();
-        _gameContex.renderFrame();
+        GlobalGame.onIntro = handler;
+        GlobalGame.renderFrame();
     }
 
-    //% block="set color $color| as background"
-    export function setBackgroundColor(color : any)  {
-        _gameContex.onIntro = color;
+
+    //% block="set background color to %color"
+    export function setBackgroundColor(color: number)  {
+        GlobalGame.bgColor = color;
     }
+
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
@@ -155,12 +163,5 @@ namespace Game64Tools {
         return hslToRgb(hue, sat, lum);
     }
 
-    /**
-     * A simple event taking an function handler
-     */
-    //% block="Loop pixels"
-    export function onEvent(handler: (x: number, y:number) => void) {
-
-    }
 };
 
