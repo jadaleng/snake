@@ -5,12 +5,16 @@
 //% color=190 weight=100 icon="\uf11b" block="Mathea & Pappa"
 namespace Game64Tools {
 
-    constructor() {
-        this.display = GAME_ZIP64.createZIP64Display();
-    }
-    class GameContext {
-        renderGameFrame: () => void;
 
+    class GameContext {
+        
+        display: any;
+        renderGameFrame: ()=>void;
+
+        constructor() {
+            this.display = GAME_ZIP64.createZIP64Display();
+            this.renderGameFrame = () => {};
+        }                                           
         renderFrame() {
             if ( this.renderGameFrame !== undefined ) {
                 this.display.clear()
