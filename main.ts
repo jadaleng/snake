@@ -8,8 +8,9 @@ namespace MPGame64Tools {
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
-    //% block
-    export function hueSatLightToColor(hue : number = 0, sat : number = 0, lum : number = 0)  {
+    //% block="get color with hue $hue| saturation $sat| and lightness $lum"
+    //% hue.shadow="colorWheelHsvPicker"
+    export function hslToRgb(hue : number = 0, sat : number = 255, lum : number = 128)  {
         hue %= 256;
         let v : number;
         let r,g,b : number;
@@ -40,6 +41,47 @@ namespace MPGame64Tools {
         }
 
         return GAME_ZIP64.rgb(r,g,b);
+    }
+
+    enum Hue {
+        Red=0,
+        Orange=28,
+        Yellow=2*28,
+        Green=3*28,
+        Turquoise=4*28,
+        Blue=5*28,
+        Violet=6*28,
+        Purple=7*28,
+        Pink=8*28
+    }
+
+    enum Saturation {
+        Strong=255,
+        Normal=200,
+        Faded=150,
+        Pale=100,
+        Paler=50,
+        Colorless=0
+    }
+
+    enum Brightness {
+        White=255,
+        Pastell=200,
+        Light=150,
+        Intense=127,
+        SlightlyDarker=100,
+        Draker=50,
+        Dark=25,
+        Black
+    }
+
+    /**
+     * A hue, saturation and luminance to RGB conversion function
+     */
+    //% block="get color with hue $hue| saturation $sat| and lightness $lum"
+    //% hue.shadow="colorWheelHsvPicker"
+    export function color(hue : Hue = Hue.Red, sat : Saturation = Saturation.Normal, lum : Brightness = 128)  {
+
     }
 };
 
