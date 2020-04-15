@@ -2,8 +2,8 @@
 /**
  * Provides access to basic micro:bit functionality.
  */
-//% color=190 weight=100 icon="\uf11b" block="Game64Tools"
-namespace MPGame64Tools {
+//% color=190 weight=100 icon="\uf11b" block="Mathea & Pappa"
+namespace Game64Tools {
 
     /**
      * A hue, saturation and luminance to RGB conversion function
@@ -45,13 +45,13 @@ namespace MPGame64Tools {
     enum Hue {
         Red=0,
         Orange=28,
-        Yellow=2*28,
-        Green=3*28,
-        Turquoise=4*28,
-        Blue=5*28,
-        Violet=6*28,
-        Purple=7*28,
-        Pink=8*28
+        Yellow=56,
+        Green=84,
+        Turquoise=112,
+        Blue=140,
+        Violet=168,
+        Purple=196,
+        Pink=224
     }
 
     enum Saturation {
@@ -78,8 +78,8 @@ namespace MPGame64Tools {
      * A hue, saturation and luminance to RGB conversion function
      */
     //% block
-    export function color(hue : Hue = Hue.Red, sat : Saturation = Saturation.Normal, lum : Brightness = 128)  {
-
+    export function color(hue: Hue, sat: Saturation, lum: Brightness)  {
+        return hslToRgb(hue, sat, lum);
     }
 };
 
