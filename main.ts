@@ -9,7 +9,6 @@ namespace MPGame64Tools {
      * A hue, saturation and luminance to RGB conversion function
      */
     //% block="get color with hue $hue| saturation $sat| and lightness $lum"
-    //% hue.shadow="colorWheelHsvPicker"
     export function hslToRgb(hue : number = 0, sat : number = 255, lum : number = 128)  {
         hue %= 256;
         let v : number;
@@ -78,8 +77,7 @@ namespace MPGame64Tools {
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
-    //% block="get color with hue $hue| saturation $sat| and lightness $lum"
-    //% hue.shadow="colorWheelHsvPicker"
+    //% block
     export function color(hue : Hue = Hue.Red, sat : Saturation = Saturation.Normal, lum : Brightness = 128)  {
 
     }
