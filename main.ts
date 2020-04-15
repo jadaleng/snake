@@ -1,6 +1,8 @@
 function draw_snake () {
-    fill_screen_with_color(100, 0, 100)
+    display.clear()
+    fill_screen_with_color(4, 0, 2)
     display.setMatrixColor(snake_x, snake_y, GAME_ZIP64.colors(ZipLedColors.Violet))
+    display.show()
 }
 function fill_screen_with_color (red: number, green: number, blue: number) {
     for (let x = 0; x <= 8; x++) {
