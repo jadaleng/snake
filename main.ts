@@ -5,6 +5,22 @@
 //% color=190 weight=100 icon="\uf11b" block="Mathea & Pappa"
 namespace Game64Tools {
 
+    constructor() {
+        this.display = GAME_ZIP64.createZIP64Display();
+    }
+    class GameContext {
+        renderGameFrame: () => void;
+
+        renderFrame() {
+            if ( this.renderGameFrame !== undefined ) {
+                this.display.clear()
+                this.renderGameFrame();
+                this.display.show();
+            }
+        }
+    };
+    let _gameContex = new GameContext();
+
     /**
      * A hue, saturation and luminance to RGB conversion function
      */
@@ -80,6 +96,14 @@ namespace Game64Tools {
     //% block
     export function color(hue: Hue, sat: Saturation, lum: Brightness)  {
         return hslToRgb(hue, sat, lum);
+    }
+
+    /**
+     * A simple event taking an function handler
+     */
+    //% block="Loop pixels"
+    export function onEvent(handler: (x: number, y:number) => void) {
+
     }
 };
 
