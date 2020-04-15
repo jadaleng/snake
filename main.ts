@@ -6,6 +6,14 @@
 namespace Game64Tools {
 
     function hslToRgb(h : number, s : number, l : number) : Array<number> {
+        
+    }
+
+    /**
+     * A function that returns a non-void argument generates a reporter block (oval shape).
+     */
+    //% block
+    export function hueSatLightToColor(h : number, s : number, l : number): number {
         let r, g, b;
 
         if (s == 0) {
@@ -29,20 +37,9 @@ namespace Game64Tools {
             b = hue2rgb(p, q, h - 1 / 3);
         }
 
-        return [
-            Math.max(0, Math.min(Math.round(r * 255), 255)) 
+        return GAME_ZIP64.rgb(Math.max(0, Math.min(Math.round(r * 255), 255)) 
             ,Math.max(0, Math.min(Math.round(g * 255), 255)) 
-            ,Math.max(0, Math.min(Math.round(b * 255), 255)) 
-        ];
-    }
-
-    /**
-     * A function that returns a non-void argument generates a reporter block (oval shape).
-     */
-    //% block
-    export function hueSatLightToColor(h : number, s : number, l : number): number {
-        let [r,g,b] = hslToRgb(h, s, l);
-        return GAME_ZIP64.rgb(r, g, b);
+            ,Math.max(0, Math.min(Math.round(b * 255), 255)) );
     }
 };
 
